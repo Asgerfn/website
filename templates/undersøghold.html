@@ -1,0 +1,60 @@
+{%extends "base.html"%}
+{% block  title %} Undersøg Hold{% endblock  %}
+{% block content %}
+<head>
+    <title>Table Example</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            /* Add other styles as desired */
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            /* Add other styles as desired */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            /* Add other styles as desired */
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Holdnavn</th>
+            <th>Herre-1</th>
+            <th>Herre-2</th>
+            <th>Herre-3</th>
+            <th>Herre-4</th>
+            <th>Herre-5</th>
+            <th>Herre-6</th>
+            <th>Dame-1</th>
+            <th>Dame-2</th>
+            <th>Dame-3</th>
+            <th>Dame-4</th>
+            <th>Managerpoint</th>
+        </tr>
+        {% for item in lst %}
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{{ item[7] }}</td>
+            <td>{{ item[8] }}</td>
+            <td>{{ item[9] }}</td>
+            <td>{{ item[10] }}</td>
+            <td>{{ item[11] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+{%endblock%}

@@ -1,0 +1,16 @@
+{%extends "base.html" %}
+{%block title%} Login Page {% endblock%}
+{% block content %}
+<h1> Her kan du logge ind </h1>
+<form action = "#" method = "POST" >
+    <input type = "text" name = "navn" placeholder "Indtast brugernavn" />
+    <br/>
+    <p> Indtast Brugernavn </p>
+    <input type = "password" name = "kode" placeholder "Indtast kode" />
+    <br/>
+    <p> Indtast kode </p>
+    <input type = "submit" value = "submit" />
+    <br/>
+</form>
+
+{%endblock%}

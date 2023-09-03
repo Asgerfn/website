@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+{% block  title %} Opret Hold{% endblock  %}
+{% block content %}
+<form action = "#" method = "POST" >
+    <input type = "text" name = "holdnavn" placeholder "Indtast Holdnavn" value = "Indtast holdnavn"/>
+    </br>
+    
+    <input type = "text" name = "herre1" placeholder "Indtast navn på 1 Herre" value="Første Herre" /> <input type = "text" name = "herre2" placeholder "Indtast navn på 2 Herre" value="Anden Herre"/> <input type = "text" name = "herre3" placeholder "Indtast navn på 3 Herre" value="Tredje Herre"/><input type = "text" name = "herre4" placeholder "Indtast navn på 4 Herre" value="Fjerde Herre" /> <input type = "text" name = "herre5" placeholder "Indtast navn på 5 Herre" value="Femte Herre"/> <input type = "text" name = "herre6" placeholder "Indtast navn på 6 Herre" value="Sjette Herre"/>
+</br>
+    <input type = "text" name = "dame1" placeholder "Indtast navn på 1 Dame" value="Første Dame" /> <input type = "text" name = "dame2" placeholder "Indtast navn på 2 Dame" value="Anden Dame"/> <input type = "text" name = "dame3" placeholder "Indtast navn på 3 Dame" value="Tredje Dame"/><input type = "text" name = "dame4" placeholder "Indtast navn på 4 Dame" value="Fjerde Dame" /> 
+</br>
+    <input type = "submit" value = "submit" />
+</form>
+
+{%endblock%}

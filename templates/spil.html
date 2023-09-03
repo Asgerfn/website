@@ -1,0 +1,19 @@
+{%extends "base.html"%}
+{% block  title %} Start spillet{% endblock  %}
+
+{% block content %}
+    <form action = "#" method = "POST" >
+        <input type = "navn" name = "navn" placeholder "Indtast navn på spiller", value = "{{navn if navn}}" />
+        
+        <input type = "submit" value = "submit" />
+    </form>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {%for msg in messages%}
+                <p>{{msg}} er nu tilføjet til spillere! </p>
+                <p> Gå til siden "Se spillere" for at finde {{msg}} </p>
+            {%endfor%}
+        {%endif%}
+    {% endwith %}
+{%endblock%}

@@ -1,0 +1,132 @@
+{%extends "base.html"%}
+{% block  title %} Se Hold{% endblock  %}
+{% block content %}
+<head>
+    <title>Table Example</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+        }
+    
+        tr td:not(:first-child) {
+            border-left: none;
+        }
+    
+        tr:first-child td {
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+             
+                <th>Navn</th>
+                <th>Managerpoint</th>
+                <th>Sejre</th>
+                <th>Nederlag</th>
+                <th>Kampe spillet</th>
+                <th>Vinder procent</th>
+                <th>Sæt spillet</th>
+                <th>Gennemsnit sæt per kamp</th>
+                <th>Single sejr</th>
+                <th>Single nederlag</th>
+                <th>Single procent sejr</th>
+                <th>Mix sejr</th>
+                <th>Mix nederlag</th>
+                <th>Mix procent sejr</th>
+                <th>Double sejr</th>
+                <th>Double nederlag</th>
+                <th>Double sejr procent</th>
+                <th>2 sæt sejre</th>
+                <th>3 sæt sejre</th>
+                <th>2 sæt nederlag</th>
+                <th>3 sæt nederlag</th>
+                <th>Procent af kampe der er 3 sæt</th>
+                <th>Procent af 3 sættere som vindes</th>
+                <th>Point for alle kampe</th>
+                <th>Modstanders point for alle kampe </th>
+                <th>Point per kamp</th>
+                <th>Point per sæt</th>
+                <th>Modstanders point per kamp</th>
+                <th>Modstander point per sæt</th>
+                <th>Sæt vundet med 18</th>
+                <th>Sæt vundet med 19</th>
+                <th>Sæt vundet med 20</th>
+                <th>Sæt tabt med 18</th>
+                <th>Sæt tabt med 19</th>
+                <th>Sæt tabt med 20</th>
+                <th>Procent tætte sæt vundet</th>
+                <th>Fået under 10 point</th>
+                <th>Fået under 5 point</th>
+                <th>Givet under 10 point</th>
+                <th>Givet under 5 point</th>
+                <th>Vundet kampen men modstanderen har fået flest point</th>
+                <th>Tabt kampen men vundet flest point</th>
+                
+            </tr>
+        </thead>
+        {% for item in lst %}
+
+        <tr {% if loop.index is divisibleby(2) %}class="even"{% endif %}>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{% if item[4]+item[5] != 0 %}{{ item[4]/(item[4]+item[5]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[7]  }}</td>
+            <td>{% if item[6] != 0 %}{{ item[7]/item[6] }}{% else %}0{% endif %}</td>
+            <td>{{ item[8]  }}</td>
+            <td>{{ item[9]  }}</td>
+            <td>{% if item[8]+item[9] != 0 %}{{ item[8]/(item[8]+item[9]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[10]  }}</td>
+            <td>{{ item[11]  }}</td>
+            <td>{% if item[10]+item[11] != 0 %}{{ item[10]/(item[10]+item[11]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[12]  }}</td>
+            <td>{{ item[13]  }}</td>
+            <td>{% if item[12]+item[13] != 0 %}{{ item[12]/(item[12]+item[13]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[14]  }}</td>
+            <td>{{ item[15]  }}</td>
+            <td>{{ item[16] }}</td>
+            <td>{{ item[17]  }}</td>
+            <td>{% if item[16]+item[17]+item[14]+item[15] != 0 %}{{ (item[17]+item[15])/(item[16]+item[17]+item[14]+item[15]) }}{% else %}0{% endif %}</td>
+            <td>{% if item[15]+item[17] != 0 %}{{ item[15]/(item[15]+item[17]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[18]  }}</td>
+            <td>{{ item[19]  }}</td>
+            <td>{% if item[6] != 0 %}{{ item[18]/item[6] }}{% else %}0{% endif %}</td>
+            <td>{% if item[7] != 0 %}{{ item[18]/item[7] }}{% else %}0{% endif %}</td>
+            <td>{% if item[6] != 0 %}{{ item[19]/item[6] }}{% else %}0{% endif %}</td>
+            <td>{% if item[7] != 0 %}{{ item[19]/item[7] }}{% else %}0{% endif %}</td>
+            <td>{{ item[20]  }}</td>
+            <td>{{ item[21]  }}</td>
+            <td>{{ item[22]  }}</td>
+            <td>{{ item[23]  }}</td>
+            <td>{{ item[24]  }}</td>
+            <td>{{ item[25]  }}</td>
+            <td>{% if item[20]+item[21]+item[22]+item[23]+item[24]+item[25] != 0 %}{{ (item[20]+item[21]+item[22])/(item[20]+item[21]+item[22]+item[23]+item[24]+item[25]) }}{% else %}0{% endif %}</td>
+            <td>{{ item[26]  }}</td>
+            <td>{{ item[27]  }}</td>
+            <td>{{ item[28]  }}</td>
+            <td>{{ item[29]  }}</td>
+            <td>{{ item[30] }}</td>
+            <td>{{ item[31] }}</td>
+
+            
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+{%endblock%}

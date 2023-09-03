@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{% block  title %} Kør spil{% endblock  %}
+{%block content%}
+    <p> Slet en enkelt spiller </p>
+    <p> Skriv det præcise navn </p>
+    <form action = "#" method = "POST" >
+        <input type = "navn" name = "navn" placeholder "Indtast her" />
+        <input type = "submit" value = "submit" />
+    </form>
+    {%with messages = get_flashed_messages()%}
+    {% if messages%}
+        {% for msg in messages%}
+            <p>{{msg}}</p>
+        {%endfor%}
+    {%endif%}
+    {% endwith %}
+    <br>
+    <p> Slet et enkelt link </p>
+    <p> Du skal indtaste det præcise links </p>
+    <p> Husk du kan finde alle dine links under "Se alle links" </p>
+    <form action = "#" method = "POST" >
+        <input type = "links" name = "links" placeholder "Indtast her" />
+        <input type = "submit" value = "submit" />
+    </form>
+    {%with messages = get_flashed_messages()%}
+    {% if messages%}
+        {% for msg in messages%}
+            <p>{{msg}}</p>
+        {%endfor%}
+    {%endif%}
+    {% endwith %}
+    <br>
+    <p> Slet et enkelt hold </p>
+    <p> Du skal indtaste det præcise holdnavn </p>
+    <p> Husk du kan finde alle dine hold under "Hold" </p>
+    <form action = "#" method = "POST" >
+        <input type = "text" name = "hold" placeholder "Indtast her" />
+        <input type = "submit" value = "submit" />
+    </form>
+{%endblock%}

@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{% block  title %} Kør spil{% endblock  %}
+{%block content%}
+    <p> Indsæt udebane link </p>
+    <form action = "#" method = "POST" >
+        <input type = "udebane link navn" name = "udebanelinknavn" placeholder "Indtast udebane link her" />
+        <input type = "submit" value = "submit" />
+    </form>
+    <br>
+    <br>
+    <p> Indsæt hjemmebane link </p> 
+    <form action = "#" method = "POST" >
+        
+        <input type = "hjemmebane link navn" name = "hjemmebanelinknavn" placeholder "Indtast hjemmebane link her" />
+        <input type = "submit" value = "submit" />
+    </form>
+    {%with messages = get_flashed_messages()%}
+        {% if messages%}
+            {% for msg in messages%}
+                <p>{{msg}}</p>
+            {%endfor%}
+        {%endif%}
+    {% endwith %}
+{%endblock%}

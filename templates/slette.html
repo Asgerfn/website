@@ -1,0 +1,19 @@
+{%extends "base.html"%}
+{% block  title %} Kør spil{% endblock  %}
+{%block content%}
+    <h1> Her slettes dit shit </h1>
+    <form method="POST" action="#">
+        <input type="submit" class="btn btn-primary btn-lg" name="SletSpiller" value="Her sletter du dine spillere">
+    </form>
+</br>
+</br>
+    <form method="POST" action="#">
+        <input type="submit" class="btn btn-primary btn-lg" name="SletLink" value="Her sletter du dine links">
+    </form>
+</br>
+</br>
+    <form method="POST" action="#">
+        <input type="submit" class="btn btn-primary btn-lg" name="SletHold" value="Her sletter du alle hold">
+    </form>
+    
+{%endblock%}

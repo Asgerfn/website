@@ -1,0 +1,32 @@
+{% extends "base.html"%}
+{% block title%} brugerside {%endblock%}
+{% block content%}
+   
+        
+    {%with messages = get_flashed_messages()%}
+        {% if messages%}
+            {% for msg in messages%}
+                <p>{{msg}}</p>
+            {%endfor%}
+        {%endif%}
+    {% endwith %}
+<form action = "#" method = "POST" >
+    <input type ="navn" name = "navn" placeholder = "Indtast navn" />
+    <br>
+    <input type ="email" name = "email" placeholder = "Indtast mail" />
+    <br>
+    <input type ="kode1" name = "kode1" placeholder = "Skriv kode" />
+    <br>
+    <input type ="kode2" name = "kode2" placeholder = "Gentag kode" />
+    <br>
+    <input type ="Klubnavn" name = "Klubnavn" placeholder = "Indtast navn på din klub" />
+    <br>
+    <input type = "submit" value = "submit" />
+</form>
+
+
+<br/>
+
+
+
+{%endblock%}

@@ -1,0 +1,55 @@
+h1 {
+    color: rgb(12, 12, 14); 
+    font-size: 50px
+}
+
+body { 
+    background: rgba(71, 42, 190, 0.267)
+}
+
+
+/* Add this after the previous CSS code */
+
+tr.even {
+        background-color: #f9f9f9;
+        }
+
+
+.hero{
+    position: relative;
+}
+
+.hero-title{
+    color: hsl(177, 43%, 19%);
+    font-size: clamp(2.5rem, 10vw+0.5rem,6rem);
+    line-height: 1;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+
+.hero-image{
+    position: relative;
+    left: 0;
+    
+    top: 0;
+
+    width: 200;
+    height: 100;
+
+    object-fit: cover;
+
+
+    -webkit-mask-image: linear-gradient(
+        rgb(0 0 0/1),
+        rgb(0 0 0/0.5), 50%
+        rgb(0 0 0 / 0)
+    );
+    mask-image: linear-gradient(
+        rgb(0 0 0/1),
+        rgb(0 0 0/0.5), 50%
+        rgb(0 0 0 / 0)
+    );
+}

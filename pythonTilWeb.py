@@ -7,12 +7,31 @@ import numpy as np
 from help import helpUdebane, fjernNavne, helpHjemmebane
 
 
+def printTable(name,cursor,conn):
+
+    cursor.columns(table=name)
+    columns = cursor.fetchall()
+
+    for column in columns:
+        column_name = column.column_name
+        data_type = column.type_name
+        max_length = column.column_size
+        is_nullable = column.nullable
+
+        print(f"Column Name: {column_name}")
+        print(f"Data Type: {data_type}")
+        print(f"Max Length: {max_length}")
+        print(f"Nullable: {is_nullable}")
+        print()
+
+
+
+
+
+        conn.commit()
+
 def pointmash(input_list):
     aggregated_dict = {}
-
-# Iterate over the groups
-    
-# Iterate over the groups
     for group in input_list:
         # Iterate over the names and points within each group
         for name, points in group:
@@ -25,8 +44,6 @@ def pointmash(input_list):
 
     # Convert the aggregated dictionary into a list of lists
     result_list = [[name, points] for name, points in aggregated_dict.items()]
-
-    #print(result_list)
     return(result_list)
 
 
@@ -72,7 +89,7 @@ def kørSpil(x,y,lst) :
             driver.get(x[i])
             #refuse = driver.find_element(by=By.ID, value ="didomi-notice-agree-button")
             #refuse.click()
-            driver.implicitly_wait(10)
+            #driver.implicitly_wait(10)
             main = driver.find_element_by_id("aspnetForm")
             tekst = str(main.text)
             finalTekst = (fjernNavne(tekst))
@@ -80,12 +97,13 @@ def kørSpil(x,y,lst) :
             lstt.append(udebane(finalTekst,tekst,lst)[0])
             endnu.append(udebane(finalTekst,tekst,lst)[1])
     for j in range(len(y)):
+            
             PATH = "C:\webdrivers\chromedriver.exe" 
             driver = webdriver.Chrome(PATH)
             driver.get(y[j])
             #refuse = driver.find_element(by=By.ID, value ="didomi-notice-agree-button")
             #refuse.click()
-            driver.implicitly_wait(10)
+            #driver.implicitly_wait(10)
             main = driver.find_element_by_id("aspnetForm")
             tekst = str(main.text)
             finalTekst = (fjernNavne(tekst))

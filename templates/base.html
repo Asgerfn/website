@@ -67,6 +67,8 @@
                     <a class="dropdown-item" href="{{url_for('oprethold')}}"> Opret hold</a>
                     <a class="dropdown-item" href="{{url_for('sehold')}}">Se hold</a>
                     <a class="dropdown-item" href="{{url_for('undersøghold')}}">Se spillere på hold</a>
+                    <a class = "dropdown-item" href ="{{url_for('ændrepoint')}}">Ændre point på et hold </a>
+                    <a class = "dropdown-item" href ="{{url_for('resethold')}}">Reset point alle hold </a>
                   
                   </div>
                 </li>
@@ -79,7 +81,8 @@
                 <li class= "Job" >
                   <a class = "nav-link" href= "{{url_for("job")}}" > Job muligheder </a>
                 </li>
-                {%if session['logged_in'] == True %}
+                
+                {%if login_success == True %}
                   <li class= "log ud" >
                     <a class = "nav-link" href= "{{url_for("logout")}}" tabindex="-1"> Logud </a>
                   </li>

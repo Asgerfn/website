@@ -1,40 +1,70 @@
-{%extends "base.html"%}
-{% block  title %} Kør spil{% endblock  %}
-{%block content%}
+{% extends "base.html" %}
+{% block title %} Kør spil{% endblock %}
+{% block content %}
     <p> Slet en enkelt spiller </p>
     <p> Skriv det præcise navn </p>
-    <form action = "#" method = "POST" >
-        <input type = "navn" name = "navn" placeholder "Indtast her" />
-        <input type = "submit" value = "submit" />
+    <form action="#" method="POST">
+        <input type="text" name="navn" placeholder="Indtast her" list="navnList" />
+        <datalist id="navnList">
+            {% for name in navnlst %}
+                <option value="{{ name }}"></option>
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Submit" />
     </form>
-    {%with messages = get_flashed_messages()%}
-    {% if messages%}
-        {% for msg in messages%}
-            <p>{{msg}}</p>
-        {%endfor%}
-    {%endif%}
+    
+    <!-- Flash messages for the first form -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
     {% endwith %}
+    
     <br>
     <p> Slet et enkelt link </p>
     <p> Du skal indtaste det præcise links </p>
     <p> Husk du kan finde alle dine links under "Se alle links" </p>
-    <form action = "#" method = "POST" >
-        <input type = "links" name = "links" placeholder "Indtast her" />
-        <input type = "submit" value = "submit" />
+    <form action="#" method="POST">
+        <input type="text" name="links" placeholder="Indtast her" list="linksList" />
+        <datalist id="linksList">
+            {% for link in linklst %}
+                <option value="{{ link }}"></option>
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Submit" />
     </form>
-    {%with messages = get_flashed_messages()%}
-    {% if messages%}
-        {% for msg in messages%}
-            <p>{{msg}}</p>
-        {%endfor%}
-    {%endif%}
+    
+    <!-- Flash messages for the second form -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
     {% endwith %}
+    
     <br>
     <p> Slet et enkelt hold </p>
     <p> Du skal indtaste det præcise holdnavn </p>
     <p> Husk du kan finde alle dine hold under "Hold" </p>
-    <form action = "#" method = "POST" >
-        <input type = "text" name = "hold" placeholder "Indtast her" />
-        <input type = "submit" value = "submit" />
+    <form action="#" method="POST">
+        <input type="text" name="hold" placeholder="Indtast her" list="holdList" />
+        <datalist id="holdList">
+            {% for hold in holdlst %}
+                <option value="{{ hold }}"></option>
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Submit" />
     </form>
-{%endblock%}
+    
+    <!-- Flash messages for the third form -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}

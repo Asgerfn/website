@@ -1,15 +1,28 @@
-{%extends "base.html"%}
-{% block  title %} Opret Hold{% endblock  %}
+{% extends "base.html" %}
+{% block title %} Opret Hold{% endblock %}
 {% block content %}
-<form action = "#" method = "POST" >
-    <input type = "text" name = "holdnavn" placeholder "Indtast Holdnavn" value = "Indtast holdnavn"/>
+<form action="#" method="POST">
+    <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast Holdnavn'" value="" /> 
+    <input type="text" name="ejer" placeholder="Ejeren af hold" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ejeren af hold'" value="" />
     </br>
-    
-    <input type = "text" name = "herre1" placeholder "Indtast navn på 1 Herre" value="Første Herre" /> <input type = "text" name = "herre2" placeholder "Indtast navn på 2 Herre" value="Anden Herre"/> <input type = "text" name = "herre3" placeholder "Indtast navn på 3 Herre" value="Tredje Herre"/><input type = "text" name = "herre4" placeholder "Indtast navn på 4 Herre" value="Fjerde Herre" /> <input type = "text" name = "herre5" placeholder "Indtast navn på 5 Herre" value="Femte Herre"/> <input type = "text" name = "herre6" placeholder "Indtast navn på 6 Herre" value="Sjette Herre"/>
-</br>
-    <input type = "text" name = "dame1" placeholder "Indtast navn på 1 Dame" value="Første Dame" /> <input type = "text" name = "dame2" placeholder "Indtast navn på 2 Dame" value="Anden Dame"/> <input type = "text" name = "dame3" placeholder "Indtast navn på 3 Dame" value="Tredje Dame"/><input type = "text" name = "dame4" placeholder "Indtast navn på 4 Dame" value="Fjerde Dame" /> 
-</br>
-    <input type = "submit" value = "submit" />
+    {% for field in ["herre1", "herre2", "herre3", "herre4", "herre5", "herre6", "dame1", "dame2", "dame3", "dame4", "Holdkaptajn"] %}
+        {% if field == "dame1" %}
+            <br>
+        {% endif %}
+        {% if field == "Holdkaptajn"%}
+            <br> 
+        {%endif%}
+        <input type="text" name="{{ field }}" placeholder="Indtast {{ field }}" list="{{ field }}List" />
+        <datalist id="{{ field }}List">
+        
+        {% for suggestion in suggestions_herre %}
+                <option value="{{ suggestion }}"></option>
+        {% endfor %}
+        
+    </datalist>
+    {% endfor %}
+    <br>
+    <input type="submit" value="Submit" />
 </form>
+{% endblock %}
 
-{%endblock%}

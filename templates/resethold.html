@@ -1,0 +1,16 @@
+{%extends "base.html"%}
+{% block  title %} Kør spil{% endblock  %}
+{%block content%}
+
+<form method="POST" action="#">
+    <input type="submit" name="myButton" value="Reset alle point for hold">
+</form>
+
+{%with messages = get_flashed_messages()%}
+    {% if messages%}
+        {% for msg in messages%}
+            <p>{{msg}}</p>
+        {%endfor%}
+    {%endif%}
+{% endwith %}
+{%endblock%}

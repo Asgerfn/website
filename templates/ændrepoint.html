@@ -1,0 +1,17 @@
+{%extends "base.html"%}
+{% block  title %} Ændre point {% endblock  %}
+{%block content%}
+<h2> Her kan du fratrække point fra et bestemt hold </h2>
+<form action="#" method="POST" name = "minus">
+    <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" />
+    <input type="text" name="minuspoint" placeholder="Indtast point" />
+    <input type="submit" value="Submit" />
+</form>
+<h2> Her kan du ligge point til et bestemt hold </h2>
+    <form action="#" method="POST" name = "plus">
+        <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" />
+        <input type="text" name="pluspoint" placeholder="Indtast point" />
+        <input type="submit" value="Submit" />
+    </form>
+
+{%endblock%}

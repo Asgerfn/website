@@ -27,12 +27,15 @@
     <table>
         <tr>
             <th>Navn</th>
+            <th>Ejer</th>
             <th>Managerpoint</th>
         </tr>
         {% for item in lst %}
         <tr>
-            <td>{{ item[-2] }}</td>
+            <td>{{item[0]}} </td>
+            <td>{{ item[1] }}</td>
             <td>{{ item[-1] }}</td>
+            
         </tr>
         {% endfor %}
     </table>

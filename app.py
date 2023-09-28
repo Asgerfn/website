@@ -1,21 +1,13 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash, jsonify, make_response
 from datetime import timedelta
-import datetime
-#from flask_sqlalchemy import SQLAlchemy
-import random
 from pythonTilWeb import *
 import pyodbc 
 import bcrypt
-import base64
-import pymysql
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_wtf import FlaskForm
 from flask_bcrypt import Bcrypt
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from functools import wraps
-import jwt
-import json
+from flask_login import login_user, login_required, logout_user
 from waitress import serve
 from connectAzure import database_info
 
@@ -292,14 +284,11 @@ def ændrepoint():
 def sehold(): 
   try:
     if session['logged_in'] == True: 
-        
       q = []
       sql = "SELECT * FROM hold WHERE klub = ?"
       cursor.execute(sql, session['klub'])
       for x in cursor:
         q.append([x[1],x[2],x[-1]])
-        
-        #x1 = holdnavn x2 = navne
       q = sorted(q, key=lambda x: x[-1], reverse=True)  
       return(render_template("sehold.html",lst = q))
     else:
@@ -391,39 +380,6 @@ def links():
       return redirect(url_for('login'))
   except KeyError:
     return redirect(url_for('login'))
-"""@app.route("/link",methods = ["POST","GET"])
-def links():
-  try:
-    if session['logged_in'] == True:
-    
-        if request.method == "POST": 
-      
-          if "udebanelinknavn" in request.form:
-
-              url = request.form["udebanelinknavn"]
-              print(url)
-              session['url'] =url
-              cursor.execute("INSERT INTO link (name,ude,id,klub) VALUES (?,?,?,?)",(url,1,0,session['klub']))
-              conn.commit()
-          elif "hjemmebanelinknavn" in request.form: 
-       
-              url = request.form["hjemmebanelinknavn"]
-              session['url'] =url
-              cursor.execute("INSERT INTO link (name,ude,id,klub) VALUES (?,?,?,?)",(url,0,0,session['klub']))
-              conn.commit()
-          sql = "SELECT * FROM hold WHERE klub = ?"
-          cursor.execute(sql, session['klub'])  
-          print("CUrosr?",(cursor))
-          for x in cursor:
-            print(x)
-        return(render_template("links.html"))
-    else:
-      
-      return redirect(url_for('login'))
-  except Exception as e:
-        #print(str(e))  # Print the exception message for debugging
-        return redirect(url_for('login'))
-"""
 @app.route("/allelinks")
 def allelinks(): 
   try:
@@ -666,199 +622,3 @@ if __name__ == "__main__":
     app.run(debug=True)
     
 
-"""lst = []
-      sql = "SELECT * FROM hold WHERE klub = ?"
-      cursor.execute(sql, session['klub'])  
-      for x in cursor:
-          lst.append([x[1],x[3], x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[-1]])
-          #print(lst)
-      sql = "SELECT navn,point FROM players WHERE klub = ?"
-      cursor.execute(sql,session['klub'])
-      spillerlst = []
-      for x in cursor: 
-        spillerlst.append([x[0],x[1]])
-      for i in range(len(lst)): 
-        poi = update_points(lst[i][1:],spillerlst)
-        cursor.execute("UPDATE hold SET point = ? WHERE holdnavn = ?", (poi, lst[i][0]))
-        conn.commit()
-      sql = "SELECT * FROM hold WHERE klub = ?"
-      cursor.execute(sql, session['klub'])  
-      q = []
-      for x in cursor:
-          q.append([x[1],x[2], x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[1],x[-1]])
-      q = sorted(q, key=lambda x: x[-1], reverse=True)
-      return(render_template("sehold.html",lst = q))
-      
-      
-      
-      
-      
-    lst = []
-      sql = "SELECT * FROM hold WHERE klub = ?"
-      cursor.execute(sql, session['klub'])  
-      for x in cursor:
-          lst.append([x[1],x[3], x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[-1]])
-          #print(lst)
-      sql = "SELECT navn,point FROM players WHERE klub = ?"
-      cursor.execute(sql,session['klub'])
-      spillerlst = []
-      for x in cursor: 
-        spillerlst.append([x[0],x[1]])
-      for i in range(len(lst)): 
-        poi = update_points(lst[i][1:],spillerlst)
-        cursor.execute("UPDATE hold SET point = ? WHERE holdnavn = ?", (poi, lst[i][0]))
-        conn.commit()
-      sql = "SELECT * FROM hold WHERE klub = ?"
-      cursor.execute(sql, session['klub'])  
-      q = []
-      for x in cursor:
-          q.append([x[1],x[2], x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[1],x[-1]])
-      q = sorted(q, key=lambda x: x[-1], reverse=True)
-      return(render_template("sehold.html",lst = q))"""
-
-"""{%extends "base.html"%}
-{% block  title %} Se Hold{% endblock  %}
-{% block content %}
-<head>
-    <title>Table Example</title>
-    <style>
-        table {
-            width: 50%;
-            border-collapse: collapse;
-            /* Add other styles as desired */
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            /* Add other styles as desired */
-        }
-
-        th {
-            background-color: #f2f2f2;
-            /* Add other styles as desired */
-        }
-    </style>
-</head>
-<body>
-    <table>
-        <tr>
-            <th>Navn</th>
-            <th>Managerpoint</th>
-            <th>Sejre</th>
-            <th>Nederlag</th>
-            <th>Kampe spillet</th>
-            <th>Vinder procent</th>
-            <th>Sæt spillet</th>
-            <th>Gennemsnit sæt per kamp</th>
-            <th>Single sejr</th>
-            <th>Single nederlag</th>
-            <th>Single procent sejr</th>
-            <th>Mix sejr</th>
-            <th>Mix nederlag</th>
-            <th>Mix procent sejr</th>
-            <th>Double sejr</th>
-            <th>Double nederlag</th>
-            <th>Double sejr procent</th>
-            <th>2 sæt sejre</th>
-            <th>3 sæt sejre</th>
-            <th>2 sæt nederlag</th>
-            <th>3 sæt nederlag</th>
-            <th>Procent af kampe der er 3 sæt</th>
-            <th>Procent af 3 sættere som vindes</th>
-            <th>Point for alle kampe</th>
-            <th>Modstanders point for alle kampe </th>
-            <th>Point per kamp</th>
-            <th>Point per sæt</th>
-            <th>Modstanders point per kamp</th>
-            <th>Modstander point per sæt</th>
-            <th>Sæt vundet med 18</th>
-            <th>Sæt vundet med 19</th>
-            <th>Sæt vundet med 20</th>
-            <th>Sæt tabt med 18</th>
-            <th>Sæt tabt med 19</th>
-            <th>Sæt tabt med 20</th>
-            <th>Procent tætte sæt vundet</th>
-            <th>Fået under 10 point</th>
-            <th>Fået under 5 point</th>
-            <th>Givet under 10 point</th>
-            <th>Givet under 5 point</th>
-            <th>Vundet kampen men modstanderen har fået flest point</th>
-            <th>Tabt kampen men vundet flest point</th>
-            
-        </tr>
-        {% for item in lst %}
-        <tr>
-            <td>{{ item[1] "navne"}}</td>
-            <td>{{ item[3] "point"}}</td>
-            <td>{{ item[4] "sejre"}}</td>
-            <td>{{ item[5] "nederlag"}}</td>
-            <td>{{ item[6] "kampe spillet"}}</td>
-            <td>{{ item[4]/(item[4]+item[5]) "procent vinder"}}</td>
-            <td>{{ item[7] "sæt spillet" }}</td>
-            <td>{{ item[7]/item[6] "sæt per kamp" }}</td>
-            <td>{{ item[8] "Single sejr" }}</td>
-            <td>{{ item[9] "Single nederlag" }}</td>
-            <td>{{ item[8]/(item[8]+item[9]) "singleprocent" }}</td>
-            <td>{{ item[10] "Mix sejr" }}</td>
-            <td>{{ item[11] "mix nederlag" }}</td>
-            <td>{{ item[10]/(item[10]+item[11]) "Mixprocent" }}</td>
-            <td>{{ item[12] "double sejr" }}</td>
-            <td>{{ item[13] "double nederlag" }}</td>
-            <td>{{ item[12]/(item[12]+item[13]) "double p rocent" }}</td>
-            <td>{{ item[14] "2 sæt sejr" }}</td>
-            <td>{{ item[15] "3 sæt sejr" }}</td>
-            <td>{{ item[16] "2 sæt nederlag" }}</td>
-            <td>{{ item[17] "3 sæt nederlag" }}</td>
-            <td>{{ (item[17]+item[15])/(item[16]+item[17]+item[14]+item[15]) "procent af kampe der er 3 sæt" }}</td>
-            <td>{{ item[15]/(item[15]+item[17]) "Kampe der er 3 sæt og vundet" }}</td>
-            <td>{{ item[18] "Point" }}</td>
-            <td>{{ item[19] "Modstander point" }}</td>
-            <td>{{ item[18]/item[6] "Point per kamp" }}</td>
-            <td>{{ item[18]/item[7] "Point per sæt" }}</td>
-            <td>{{ item[19]/item[6] "Modstander point per kamp" }}</td>
-            <td>{{ item[19]/item[7] "Modstander point per sæt" }}</td>
-            <td>{{ item[20] "Vundet 18" }}</td>
-            <td>{{ item[21] "Vundet 19" }}</td>
-            <td>{{ item[22] "Vundet 20" }}</td>
-            <td>{{ item[23] "Tabt 18" }}</td>
-            <td>{{ item[24] "Tabt 19" }}</td>
-            <td>{{ item[25] "Tabt 20" }}</td>
-            <td>{{ (item[20]+item[21]+item[22])/(item[20]+item[21]+item[22]+item[23]+item[24]+item[25]) "Tætte sæt vundet" }}</td>
-            <td>{{ item[26] "Under 10" }}</td>
-            <td>{{ item[27] "Under 5" }}</td>
-            <td>{{ item[28] "Givet 10" }}</td>
-            <td>{{ item[29] "Givet 5" }}</td>
-            <td>{{ item[30] "Vundet kamp modstander flest point" }}</td>
-            <td>{{ item[31] "Tabt kamp flest point" }}</td>
-
-            
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-{%endblock%}"""
-
-
-"""<form action="#" method="POST">
-    <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast Holdnavn'" value="" /> 
-    <input type="text" name="ejer" placeholder="Ejeren af hold" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ejeren af hold'" value="" />
-    </br>
-
-    <input type="text" name="herre1" placeholder="Indtast navn på 1 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 1 Herre'" value="" /> 
-    <input type="text" name="herre2" placeholder="Indtast navn på 2 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 2 Herre'" value="" />
-    <input type="text" name="herre3" placeholder="Indtast navn på 3 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 3 Herre'" value="" />
-    <input type="text" name="herre4" placeholder="Indtast navn på 4 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 4 Herre'" value="" /> 
-    <input type="text" name="herre5" placeholder="Indtast navn på 5 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 5 Herre'" value="" /> 
-    <input type="text" name="herre6" placeholder="Indtast navn på 6 Herre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 6 Herre'" value="" />
-    </br>
-    <input type="text" name="dame1" placeholder="Indtast navn på 1 Dame" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 1 Dame'" value="" /> 
-    <input type="text" name="dame2" placeholder="Indtast navn på 2 Dame" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 2 Dame'" value="" /> 
-    <input type="text" name="dame3" placeholder="Indtast navn på 3 Dame" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 3 Dame'" value="" />
-    <input type="text" name="dame4" placeholder="Indtast navn på 4 Dame" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Indtast navn på 4 Dame'" value="" /> 
-    </br>
-    <input type="text" name="Holdkaptajn" placeholder="Holdkaptajn" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Holdkaptajn'" value="" />
-    </br>
-    <input type="submit" value="Submit" />
-</form>"""

@@ -12,7 +12,6 @@ Beaker==1.12.0
 beautifulsoup4==4.11.1
 binaryornot==0.4.4
 bs4==0.0.1
-briefcase==0.3.11
 cachetools==5.2.0
 certifi==2021.10.8
 cffi==1.15.0
@@ -31,7 +30,6 @@ distlib==0.3.7
 entrypoints==0.4
 et-xmlfile==1.1.0
 executing==0.8.3
-filelock==3.12.3
 Flask==2.1.2
 Flask-Bcrypt==1.0.1
 Flask-Login==0.6.1

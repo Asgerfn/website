@@ -78,7 +78,7 @@ cursor.execute(create_table_sql)
 conn.commit()
 """
 
-session = {"logged_in": False}
+#session = {"logged_in": False}
 
 
 #print(printTable("hold",cursor,conn))
@@ -131,7 +131,6 @@ def login():
       """token = jwt.encode({'mail' : id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
       """
       return redirect(url_for(("home")))
-      
   return render_template('login.html')
 
 
@@ -205,49 +204,83 @@ def statistik():
       return redirect(url_for('login'))
   except: 
       return redirect(url_for('login'))
-  redirect(url_for("login"))
+
 
 
 @app.route("/oprethold", methods=["POST", "GET"])
 def oprethold():
-    
-    
     try: 
-      if session['logged_in'] == True:
-        lst = []
-        sql = "SELECT navn FROM players WHERE klub = ?"
-        cursor.execute(sql, session['klub'])
-        for x in cursor:
-          lst.append(str(x)[2:-3])
-        if request.method == "POST":
-            
-            
-            holdnavn = request.form["holdnavn"]
-            ejer = request.form["ejer"]
-            herre1 = request.form["herre1"]
-            herre2 = request.form["herre2"]
-            herre3 = request.form["herre3"]
-            herre4 = request.form["herre4"]
-            herre5 = request.form["herre5"]
-            herre6 = request.form["herre6"]
-            dame1 = request.form["dame1"]
-            dame2 = request.form["dame2"]
-            dame3 = request.form["dame3"]
-            dame4 = request.form["dame4"]
-            kaptajn = request.form["Holdkaptajn"]
-            
-            cursor.execute("INSERT INTO hold (holdnavn, ejer, herre1, herre2, herre3, herre4, herre5, herre6, dame1, dame2, dame3, dame4, kaptajn, klub, point) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (holdnavn, ejer, herre1, herre2, herre3, herre4, herre5, herre6, dame1, dame2, dame3, dame4, kaptajn, session['klub'], 0))
-            conn.commit()
-            #print(lst)
-            return render_template("oprethold.html", suggestions_herre=lst)
-      else: 
-        
+        if session.get('logged_in'):
+            lst = []
+            sql = "SELECT navn FROM players WHERE klub = ?"
+            cursor.execute(sql, (session['klub'],))
+            for x in cursor:
+                lst.append(str(x)[2:-3])
+            if request.method == "POST":
+                holdnavn = request.form["holdnavn"]
+                ejer = request.form["ejer"]
+                herre1 = request.form["herre1"]
+                herre2 = request.form["herre2"]
+                herre3 = request.form["herre3"]
+                herre4 = request.form["herre4"]
+                herre5 = request.form["herre5"]
+                herre6 = request.form["herre6"]
+                dame1 = request.form["dame1"]
+                dame2 = request.form["dame2"]
+                dame3 = request.form["dame3"]
+                dame4 = request.form["dame4"]
+                kaptajn = request.form["Holdkaptajn"]
+                
+                cursor.execute("INSERT INTO hold (holdnavn, ejer, herre1, herre2, herre3, herre4, herre5, herre6, dame1, dame2, dame3, dame4, kaptajn, klub, point) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (holdnavn, ejer, herre1, herre2, herre3, herre4, herre5, herre6, dame1, dame2, dame3, dame4, kaptajn, session['klub'], 0))
+                conn.commit()
+                
+                return render_template("oprethold.html", suggestions_herre=lst)
+            else:
+              return render_template("oprethold.html", suggestions_herre=lst)
+        else:
+            return redirect(url_for('login'))
+    except Exception as e: 
+        print(e)  # You should log the exception for debugging purposes.
         return redirect(url_for('login'))
-    except: 
-      return redirect(url_for('login'))
 
+@app.route("/ændrehold",methods = ["POST","GET"])
+def ændrehold(): 
+  try: 
+    if 'logged_in' in session: #session['logged_in'] == True: 
+      if request.method == "POST":
+        if "holdnavn" in request.form:
+          
+          nytholdnavn = request.form["nytholdnavn"]
+          klub = session['klub']
+          gammeltholdnavn = request.form["holdnavn"]
+          cursor.execute("UPDATE hold SET holdnavn = ? WHERE holdnavn = ? AND klub = ?", (nytholdnavn, gammeltholdnavn, klub))
+          conn.commit()
+          return render_template("ændrehold.html")
+        if "spillernavn" in request.form:
+          print("så lang så godt")
+          gammelspiller = request.form["udskiftes"]
+          klub = session['klub']
+          nyspiller = request.form["nyspiller"]
+          gammeltholdnavn = request.form["holdnavn"]
+          cursor.execute("UPDATE hold SET herre1 = CASE WHEN herre1 = ? THEN ? ELSE herre1 END, herre2 = CASE WHEN herre2 = ? THEN ? ELSE herre2 END, herre3 = CASE WHEN herre3 = ? THEN ? ELSE herre3 END, herre4 = CASE WHEN herre4 = ? THEN ? ELSE herre4 END, herre5 = CASE WHEN herre5 = ? THEN ? ELSE herre5 END, herre6 = CASE WHEN herre6 = ? THEN ? ELSE herre6 END, dame1 = CASE WHEN dame1 = ? THEN ? ELSE dame1 END, dame2 = CASE WHEN dame2 = ? THEN ? ELSE dame2 END, dame3 = CASE WHEN dame3 = ? THEN ? ELSE dame3 END, dame4 = CASE WHEN dame4 = ? THEN ? ELSE dame4 END, kaptajn = CASE WHEN kaptajn = ? THEN ? ELSE kaptajn END WHERE holdnavn = ? AND klub = ?", (gammelspiller, nyspiller, gammelspiller, nyspiller, gammelspiller, nyspiller, gammelspiller, nyspiller, gammelspiller, nyspiller, gammelspiller, nyspiller, gammelspiller, nyspiller, gammeltholdnavn, klub))
+          conn.commit()
+          return render_template("ændrehold.html")
+        if "ejer" in request.form:
+          holdnavn = request.form["holdnavn"]
+          ejernavn = request.form["ejernavn"]
+          klub = session['klub']
+          cursor.execute("UPDATE hold SET ejer = ? WHERE holdnavn = ? AND klub = ?", (ejernavn, holdnavn, klub))
+          return(render_template("ændrehold.html"))
+      else: 
+        return(render_template("ændrehold.html"))
+    else: 
+      return(render_template("ændrehold.html"))
+  except: 
+    print(1)
+    return redirect(url_for('login'))
+  
 
-@app.route("/ændrepoint",methods =["POST","GET"])
+@app.route("/ændrepoint",methods = ["POST","GET"])
 def ændrepoint(): 
   try: 
     if session['logged_in'] == True: 
@@ -618,7 +651,7 @@ def resetpoint():
 if __name__ == "__main__":
     #with app.app_context():
         #db.create_all()
-    #serve(app, host = "127.0.0.1", port = 5000, threads = 4)
-    app.run(debug=True)
+    serve(app, host = "127.0.0.1", port = 5000, threads = 4)
+    #app.run(debug=True)
     
 

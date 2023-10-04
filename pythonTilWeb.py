@@ -1,9 +1,5 @@
 from selenium import webdriver
-import re
-from selenium.webdriver.common.keys import Keys
-import openpyxl
 from selenium.webdriver.common.by import By
-import numpy as np
 from help import helpUdebane, fjernNavne, helpHjemmebane
 
 

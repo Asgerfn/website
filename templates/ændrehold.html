@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{% block  title %} Ændre point {% endblock  %}
+{%block content%}
+<h2> Her kan du ændre et holdnavn på et bestemt hold </h2>
+<form action="#" method="POST" name = "holdnavn">
+    <input type="text" name="holdnavn" placeholder="Indtast gamle holdnavn" />
+    <input type="text" name="nytholdnavn" placeholder="Indtast nyt holdnavn" />
+    <input type="submit" value="Submit" />
+</form>
+<h2> Her kan du ændre en spiller på et bestemt hold </h2>
+    <form action="#" method="POST" name = "spillernavn">
+        <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" />
+        <input type="text" name="udskiftes" placeholder="Indtast spiller der skal udskiftes" />
+        <input type="text" name="nyspiller" placeholder="Indtast den nye spiller" />
+        <input type="submit" value="Submit" />
+    </form>
+<h2> Her kan du ændre navnet på ejeren af et bestemt hold </h2>
+    <form action="#" method="POST" name = "ejer">
+        <input type="text" name="holdnavn" placeholder="Indtast Holdnavn" />
+        <input type="text" name="ejernavn" placeholder="Indtast nyt ejernavn" />
+        <input type="submit" value="Submit" />
+    </form>
+
+{%endblock%}
